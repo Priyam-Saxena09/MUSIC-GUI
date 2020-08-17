@@ -3,6 +3,7 @@ from PIL import Image, ImageTk
 from functools import partial
 from pygame import mixer
 from win32com.client import Dispatch
+import tkinter.messagebox as ms
 music = Tk()
 def speak(str):
     speak = Dispatch("SAPI.SpVoice")
@@ -18,6 +19,12 @@ def play(song):
     canvas.image = filename
     canvas.create_image(0, 0, anchor='nw', image=filename)
     canvas.pack()
+def exit():
+    opt = ms.askquestion("Exit","Do you Want to exit the Music Player?")
+    if(opt == "yes"):
+        music.destroy()
+    else:
+        pass    
 music.geometry("1330x1000")
 music.title("Music Player")
 music.maxsize(2500,2500)
@@ -78,7 +85,7 @@ Button(f1,text="The Hook Up Song",font="Helvetica 13 bold",relief=SUNKEN,command
 Button(f1,text="Yaad Piya Ki Aane Lagi",font="Helvetica 13 bold",relief=SUNKEN,command=partial(play,"Yaad Piya Ki Aane Lagi")).grid(row=9,column=8,padx=10,pady=8)
 canvas = Canvas(height=1000,width=1900,bg="black")
 men = Menu()
-men.add_command(label="Exit",command=quit)
+men.add_command(label="Exit",command=exit)
 music.config(menu=men)
 canvas.pack()
 music.mainloop()
